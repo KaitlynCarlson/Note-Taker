@@ -17,7 +17,5 @@ module.exports = app => {
     });
     res.json(true);
   });
-  app.delete("/api/notes", (req, res) => {
-    res.delete(savedNotes);
-  });
+  app.delete("/api/notes/:id", (req, res) => {});
 };

@@ -7,15 +7,15 @@ module.exports = app => {
   app.get("/api/notes", (req, res) => res.json(savedNotes));
 
   app.post("/api/notes", (req, res) => {
-    let id = savedNotes.length;
-    savedNotes.id = id + 1;
+    let newNote = req.body;
+    let id = savedNotes.length + 1;
+    newNote.id = id;
     console.log(savedNotes.id);
-    savedNotes.push(req.body);
+    savedNotes.push(newNote);
     fs.writeFile("./db/db.json", JSON.stringify(savedNotes), err => {
       if (err) throw err;
       console.log("New note added");
     });
     res.json(true);
   });
-  app.delete("/api/notes/:id", (req, res) => {});
 };

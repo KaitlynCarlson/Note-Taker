@@ -14,8 +14,15 @@ module.exports = app => {
     savedNotes.push(newNote);
     fs.writeFile("./db/db.json", JSON.stringify(savedNotes), err => {
       if (err) throw err;
-      console.log("New note added");
+      console.log("New note added!");
     });
     res.json(true);
+  });
+  app.delete("/api/notes/:id", (req, res) => {
+    const deletedNote = savedNotes.filter(
+      note => note.id === parseInt(req.params.id)
+    );
+    console.log(deletedNote.findIndex);
+    savedNotes.splice(deletedNote, 1);
   });
 };

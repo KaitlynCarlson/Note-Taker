@@ -19,10 +19,17 @@ module.exports = app => {
     res.json(true);
   });
   app.delete("/api/notes/:id", (req, res) => {
-    const deletedNote = savedNotes.filter(
-      note => note.id === parseInt(req.params.id)
-    );
-    console.log(deletedNote.findIndex);
-    savedNotes.splice(deletedNote, 1);
+    const deleteId = parseInt(req.params.id);
+    for (let i = 0; i < savedNotes.length; ++i) {
+      if (deleteId === savedNotes[i].id) {
+        savedNotes.splice(i, 1);
+        return;
+      }
+    }
+    fs.writeFile("./db/db.json", JSON.stringify(savedNotes), err => {
+      if (err) throw err;
+      console.log("Note successfully deleted!");
+    });
+    res.send(savedNotes);
   });
 };
